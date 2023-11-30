@@ -37,7 +37,7 @@ def create_monthly_users_df(df):
     
     return monthly_df
 
-def create_seasonly_users_df(df):
+def create_seasonly_df(df):
     seasonly_df = bike_df.groupby("season").agg({
         "casual": "sum",
         "registered": "sum",
