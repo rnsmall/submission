@@ -14,6 +14,13 @@ bike_df['month'] =  bike_df['dteday'].dt.strftime('%B')
 bike_df['year'] = bike_df.dteday.dt.year
 bike_df['month_num'] = bike_df['dteday'].dt.month
 bike_df['total riders'] = bike_df['casual'] + bike_df['registered']
+
+seasons_map= {1: 'winter',
+                   2: 'spring',
+                   3: 'summer',
+                   4: 'fall'}
+bike_df['season'] = bike_df['season'].map(seasons_map)
+
 #st.set_page_config(page_title="Capital Bikeshare: Bike-sharing Dashboard",
                #    page_icon="bar_chart:",
                  #  layout="wide")
