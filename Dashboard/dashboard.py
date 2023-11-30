@@ -20,7 +20,7 @@ bike_df['total riders'] = bike_df['casual'] + bike_df['registered']
 st.header('Dicoding Collection Dashboard :sparkles:')
 # membuat helper
 
-def create_monthly_users_df(df):
+def create_monthly_df(df):
     monthly_df = bike_df.resample(rule='M', on='dteday').agg({
         "casual": "sum",
         "registered": "sum",
