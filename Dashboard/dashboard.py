@@ -125,9 +125,9 @@ fig1 = px.bar(seasonly_df,
               color_discrete_sequence=["skyblue", "orange", "red"],
               title='Count of bikeshare rides by season').update_layout(xaxis_title='', yaxis_title='Total Rides')
 
-st.plotly_chart(fig1, use_container_width=True)
+#st.plotly_chart(fig1, use_container_width=True)
 
-
+left_column.plotly_chart(fig1, use_container_width=True)
 # ----- HIDE STREAMLIT STYLE -----
 hide_st_style = """
                 <style>
