@@ -9,6 +9,11 @@ import streamlit as st
 bike_df = pd.read_csv("https://github.com/rnsmall/submission/raw/main/Dashboard/main_data.csv")
 bike_df.head()
 
+bike_df['dteday'] =  pd.to_datetime(bike_df['dteday'])
+bike_df['month'] =  bike_df['dteday'].dt.strftime('%B')
+bike_df['year'] = bike_df.dteday.dt.year
+bike_df['month_num'] = bike_df['dteday'].dt.month
+bike_df['total riders'] = bike_df['casual'] + bike_df['registered']
 #st.set_page_config(page_title="Capital Bikeshare: Bike-sharing Dashboard",
                #    page_icon="bar_chart:",
                  #  layout="wide")
