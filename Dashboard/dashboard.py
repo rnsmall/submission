@@ -127,7 +127,6 @@ fig1 = px.bar(season_df,
               x='season',
               y=['casual_rides', 'registered_rides', 'total_rides'],
               color_discrete_sequence=["skyblue", "orange", "red"],
-              markers=True,
               title="Season").update_layout(xaxis_title='', yaxis_title='Total Rides')
 
 
