@@ -6,8 +6,8 @@ import streamlit as st
 
 # load dataset
 
-df = pd.read_csv("https://raw.githubusercontent.com/fikrionii/Dicoding-Bike-Sharing/main/dataset/cleaned_bikeshare_hour.csv")
-df['dteday'] = pd.to_datetime(df['dteday'])
+bike_df = pd.read_csv("https://github.com/rnsmall/submission/raw/main/Dashboard/main_data.csv")
+bike_df.head()
 
 #st.set_page_config(page_title="Capital Bikeshare: Bike-sharing Dashboard",
                #    page_icon="bar_chart:",
