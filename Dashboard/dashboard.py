@@ -15,16 +15,21 @@ bike_df['year'] = bike_df.dteday.dt.year
 bike_df['month_num'] = bike_df['dteday'].dt.month
 bike_df['total riders'] = bike_df['casual'] + bike_df['registered']
 
+
+
 seasons_map= {1: 'winter',
                    2: 'spring',
                    3: 'summer',
                    4: 'fall'}
 bike_df['season'] = bike_df['season'].map(seasons_map)
 
-#st.set_page_config(page_title="Capital Bikeshare: Bike-sharing Dashboard",
-               #    page_icon="bar_chart:",
-                 #  layout="wide")
-st.header('Dicoding Collection Dashboard :sparkles:')
+
+st.set_page_config(page_title='Bike Sharing Dicoding submission Dashboard :sparkles:',
+                  page_icon="bar_chart:",
+                   layout="wide")
+
+
+
 # membuat helper
 
 def create_monthly_df(df):
@@ -44,33 +49,26 @@ def create_monthly_df(df):
     
     return monthly_df
 
-def create_seasonly_df(df):
-    seasonly_df = bike_df.groupby("season").agg({
+# season
+def create_season_df(df):
+    season_df = bike_df.groupby("season").agg({
         "casual": "sum",
         "registered": "sum",
         "cnt": "sum"
     })
-    seasonly_df = seasonly_df.reset_index()
-    seasonly_df.rename(columns={
+    
+    season_df = season_df.reset_index()
+    season_df.rename(columns={
+          "season":"season",
         "cnt": "total_rides",
         "casual": "casual_rides",
         "registered": "registered_rides"
     }, inplace=True)
     
-    seasonly_df = pd.melt(seasonly_df,
-                                      id_vars=['season'],
-                                      value_vars=['casual_rides', 'registered_rides'],
-                                      var_name='type_of_rides',
-                                      value_name='count_rides')
-    
-    seasonly_df['season'] = pd.Categorical(seasonly_df['season'],
-                                             categories=['Spring', 'Summer', 'Fall', 'Winter'])
-    
-    seasonly_df = seasonly_df.sort_values('season')
-    
-    return seasonly_df
+    return season_df
 
 
+#filter
 min_date = bike_df["dteday"].min()
 max_date = bike_df["dteday"].max()
 
@@ -96,10 +94,10 @@ main_df = bike_df[
 
 
 monthly_df = create_monthly_df(main_df)
-seasonly_df = create_seasonly_df(main_df)
+season_df = create_season_df(main_df)
 
 # ----- MAINPAGE -----
-st.title(":bar_chart: Capital Bikeshare: Bike-Sharing Dashboard")
+st.title(":bar_chart: BIke Share: Bike share Dashboard")
 st.markdown("##")
 
 col1, col2, col3 = st.columns(3)
@@ -121,21 +119,21 @@ fig = px.line(monthly_df,
               y=['casual_rides', 'registered_rides', 'total_rides'],
               color_discrete_sequence=["skyblue", "orange", "red"],
               markers=True,
-              title="Monthly Count of Bikeshare Rides").update_layout(xaxis_title='', yaxis_title='Total Rides')
+              title="Monthly").update_layout(xaxis_title='', yaxis_title='Total Rides')
 
 st.plotly_chart(fig, use_container_width=True)
 
-fig1 = px.bar(seasonly_df,
+fig1 = px.bar(season_df,
               x='season',
-              y=['count_rides'],
-              color='type_of_rides',
+              y=['casual_rides', 'registered_rides', 'total_rides'],
               color_discrete_sequence=["skyblue", "orange", "red"],
-              title='Count of bikeshare rides by season').update_layout(xaxis_title='', yaxis_title='Total Rides')
+              markers=True,
+              title="Season").update_layout(xaxis_title='', yaxis_title='Total Rides')
 
-#st.plotly_chart(fig1, use_container_width=True)
 
-left_column, right_column = st.columns(2)
-left_column.plotly_chart(fig1, use_container_width=True)
+st.plotly_chart(fig1, use_container_width=True)
+
+
 # ----- HIDE STREAMLIT STYLE -----
 hide_st_style = """
                 <style>
