@@ -127,6 +127,7 @@ fig1 = px.bar(seasonly_df,
 
 #st.plotly_chart(fig1, use_container_width=True)
 
+left_column, right_column = st.columns(2)
 left_column.plotly_chart(fig1, use_container_width=True)
 # ----- HIDE STREAMLIT STYLE -----
 hide_st_style = """
